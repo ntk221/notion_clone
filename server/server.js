@@ -3,8 +3,9 @@ const helmet = require("helmet");
 const mongoose = require("mongoose");
 const app = express();
 app.use(helmet());
+require("dotenv").config();
 
-mongoose.connect("mongodb+srv://Kazuki:vzo60AmntFz7h24M@cluster0.aydmxll.mongodb.net/?retryWrites=true&w=majority", {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
