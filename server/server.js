@@ -9,12 +9,25 @@ mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => {
+/*.then(() => {
   console.log("success!");
 })
 .catch((error) => {
   console.error("Error!");
-})
+})*/
+
+const UserSchema = new mongoose.Schema({
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+});
+const User = mongoose.model("User", UserSchema);
 
 // GET '/' 
 app.get("/", (req, res) => {
