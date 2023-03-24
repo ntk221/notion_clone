@@ -1,22 +1,18 @@
 const express = require("express");
 const helmet = require("helmet");
-const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const app = express();
+const mongoose = require("mongoose");
+const { json } = require("express");
 app.use(helmet());
+app.use(json());
 require("dotenv").config();
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-})
-/*.then(() => {
-  console.log("success!");
-})
-.catch((error) => {
-  console.error("Error!");
-})*/
+});
 
 const UserSchema = new mongoose.Schema({
   email: {
@@ -28,6 +24,11 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  }
 });
 
 const User = mongoose.model("User", UserSchema);
@@ -36,11 +37,14 @@ const User = mongoose.model("User", UserSchema);
 app.get("/", (req, res) => {
     res.status(200).send("hello\n");
 })
+
+// 新規ユーザー登録
 app.post("/signup", async (req, res) => {
   const hashedPassword = await bcrypt.hash(req.body.password, 5);
   const user = new User({
     email: req.body.email,
     password: hashedPassword,
+    username: req.body.username
   });
   try {
     await user.save();
@@ -54,3 +58,5 @@ app.post("/signup", async (req, res) => {
 app.listen(3000, ()=> {
     console.log("start listening");
 })
+
+module.exports = app;
