@@ -40,6 +40,8 @@ app.get("/", (req, res) => {
 
 // 新規ユーザー登録
 app.post("/signup", async (req, res) => {
+  console.log(req.body);
+  console.log(req.body.password);
   const hashedPassword = await bcrypt.hash(req.body.password, 5);
   const user = new User({
     email: req.body.email,
@@ -55,7 +57,7 @@ app.post("/signup", async (req, res) => {
   }
 })
 
-app.listen(3000, ()=> {
+app.listen(8001, ()=> {
     console.log("start listening");
 })
 
