@@ -1,9 +1,21 @@
 import React from "react";
 import InputField from "./InputField";
 import SubmitButton from "./SubmitButton";
+import axios from "axios";
 
 const SignupForm: React.FC = () => {
-  const handleSubmit = () => {console.log("hoge")};
+  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget.form;
+    if (!form) return; 
+    const formData = new FormData(form);
+    try {
+        const response = await axios.post('/api/register', formData);
+        console.log(response);
+    } catch (error) {
+        console.error(error);
+    }
+  };
   return (
     <form>
         <div>
@@ -15,7 +27,7 @@ const SignupForm: React.FC = () => {
         <div>
             <InputField type="email" placeholder="メールアドレス" />
         </div>
-        <SubmitButton onSubmit={handleSubmit} />
+        <SubmitButton onClick={handleSubmit} />
     </form>
   );
 };
