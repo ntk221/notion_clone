@@ -26,7 +26,6 @@ mongoose.connect(process.env.MONGODB_URI, {
   });
 });
 
-
 // GET '/'
 app.get("/", (req, res) => {
   res.status(200).send("hello\n");
