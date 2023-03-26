@@ -21,13 +21,9 @@ const SignupForm: React.FC = () => {
   const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const form = event.currentTarget.form;
-    console.log(form);
     if (!form) return;
     const formData = new FormData(form);
-    console.log(formData);
-    // JSON形式に変換
     const jsonData = formToJSON(formData);
-    console.log(jsonData);
     try {
       const response = await axios.post("/signup", jsonData, {
         headers: { "Content-type": "application/json" },
@@ -44,6 +40,7 @@ const SignupForm: React.FC = () => {
           type="text"
           placeholder="ユーザー名"
           name="username"
+          value={formData.username}
           onChange={handleInputChange}
         />
       </div>
@@ -52,6 +49,7 @@ const SignupForm: React.FC = () => {
           type="password"
           placeholder="パスワード"
           name="password"
+          value={formData.password}
           onChange={handleInputChange}
         />
       </div>
@@ -60,6 +58,7 @@ const SignupForm: React.FC = () => {
           type="email"
           placeholder="メールアドレス"
           name="email"
+          value={formData.email}
           onChange={handleInputChange}
         />
       </div>
