@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, FormEvent} from "react";
 import axios, { formToJSON } from "axios";
-import { Button, FormControl, FormLabel, Input, Stack }from "@chakra-ui/react" 
+import { Box, Button, FormControl, FormLabel, Input, VStack, Text, Link } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const SignupForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -17,7 +18,13 @@ const SignupForm: React.FC = () => {
     }));
   };
 
-  const handleSubmit = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  };
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget.form;
     if (!form) return;
@@ -32,41 +39,32 @@ const SignupForm: React.FC = () => {
       console.error(error);
     }
   };
+
   return (
-    <form>
-      <Stack spacing={4}>
-        <FormControl id="username">
-          <FormLabel>ユーザー名</FormLabel>
-          <Input
-            type="text"
-            name="username"
-            value={formData.username}
-            onChange={handleInputChange}
-          />
-        </FormControl>
-        <FormControl id="password">
-        <FormLabel>パスワード</FormLabel>
-          <Input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-          />
-        </FormControl>
-        <FormControl id="email">
-        <FormLabel>メールアドレス</FormLabel>
-          <Input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-          />
-        </FormControl>
-        <Button colorScheme="blue" onClick={handleSubmit}>
-          アカウント作成
-        </Button>
-      </Stack>
-    </form>
+    <Box>
+      <form onSubmit={handleSubmit}>
+        <VStack spacing="4">
+          <FormControl id="username">
+            <FormLabel>ユーザー名</FormLabel>
+            <Input type="text" name="username" value={formData.username} onChange={handleInputChange} />
+          </FormControl>
+          <FormControl id="email">
+            <FormLabel>Eメール</FormLabel>
+            <Input type="email" name="email"value={formData.email} onChange={handleInputChange} />
+          </FormControl>
+          <FormControl id="password">
+            <FormLabel>パスワード</FormLabel>
+            <Input type="password" name="password" value={formData.password} onChange={handleInputChange} />
+          </FormControl>
+          <Button type="submit" colorScheme="blue" w="full">
+            登録する
+          </Button>
+        </VStack>
+      </form>
+      <Text mt="4">
+        アカウントをお持ちですか？ <Link href="/login">ログイン</Link>
+      </Text>
+    </Box>
   );
 };
 
