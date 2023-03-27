@@ -1,6 +1,5 @@
 import React from "react";
 import "./App.css";
-import "./components/InputField";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthLayout from "./components/Layout/AuthLayout";
 import AppLayout from "./components/Layout/AppLayout";
