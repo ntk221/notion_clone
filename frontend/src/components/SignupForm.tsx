@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import InputField from "./InputField";
-import SubmitButton from "./SubmitButton";
 import axios, { formToJSON } from "axios";
+import { Button, FormControl, FormLabel, Input, Stack }from "@chakra-ui/react" 
 
 const SignupForm: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -35,34 +34,38 @@ const SignupForm: React.FC = () => {
   };
   return (
     <form>
-      <div>
-        <InputField
-          type="text"
-          placeholder="ユーザー名"
-          name="username"
-          value={formData.username}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <InputField
-          type="password"
-          placeholder="パスワード"
-          name="password"
-          value={formData.password}
-          onChange={handleInputChange}
-        />
-      </div>
-      <div>
-        <InputField
-          type="email"
-          placeholder="メールアドレス"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-        />
-      </div>
-      <SubmitButton onClick={handleSubmit} />
+      <Stack spacing={4}>
+        <FormControl id="username">
+          <FormLabel>ユーザー名</FormLabel>
+          <Input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleInputChange}
+          />
+        </FormControl>
+        <FormControl id="password">
+        <FormLabel>パスワード</FormLabel>
+          <Input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+          />
+        </FormControl>
+        <FormControl id="email">
+        <FormLabel>メールアドレス</FormLabel>
+          <Input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+          />
+        </FormControl>
+        <Button colorScheme="blue" onClick={handleSubmit}>
+          アカウント作成
+        </Button>
+      </Stack>
     </form>
   );
 };
