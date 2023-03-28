@@ -53,8 +53,6 @@ app.post("/signup", async (req, res, next) => {
         return res.status(409).json({ error: "Username already exists" });
       }
     }
-    console.error(err.stack);
-    res.status(500).json({ error: "Internal Server Error" });
     next(err);
   }
 });
