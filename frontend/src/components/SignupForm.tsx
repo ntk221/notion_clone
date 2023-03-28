@@ -29,10 +29,6 @@ const SignupForm: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const handleLoginClick = () => {
-    navigate("/login");
-  };
-
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
