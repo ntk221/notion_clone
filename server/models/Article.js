@@ -1,5 +1,5 @@
 const articleSchema = new mongoose.Schema({
-    author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    author: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true},
     body: { type: String, required: true},
     title: { type: String, required: true},
     createdAt: { type: Date, default: Date.now},
