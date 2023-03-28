@@ -1,8 +1,10 @@
-const { express, json } = require("express");
+const { json } = require("express");
 const helmet = require("helmet");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const express = require("express");
+const User = require("./models/User");
 require("dotenv").config();
 
 const app = express();
@@ -44,6 +46,15 @@ app.post("/signup", async (req, res, next) => {
     const token = await jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
     res.status(201).json({ token });
   } catch (err) {
+    if (err.name === "MongoServerError" && err.code === 11000) {
+      if (err.keyPattern.email) {
+        return res.status(409).json({ error: "Email already exists" });
+      } else if (err.keyPattern.username) {
+        return res.status(409).json({ error: "Username already exists" });
+      }
+    }
+    console.error(err.stack);
+    res.status(500).json({ error: "Internal Server Error" });
     next(err);
   }
 });
