@@ -57,6 +57,22 @@ app.post("/signup", async (req, res, next) => {
   }
 });
 
+const verifyToken = async(req, res, next) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const decodedToken = await jwt.verify(token, process.env.SECRET_KEY);
+    req.userData = { userId: decodedToken.userId };
+    next();
+  } catch (err) {
+    res.status(401).json({ error: "Authentication failed" });
+  }
+}
+
+// GET '/check-auth'
+app.get("/check-auth", verifyToken, (req, res) => {
+  res.status(200).json({ message: "Authentication succeeded" });
+})
+
 // 包括的エラーハンドリング
 app.use((err, req, res, next) => {
   console.error(err.stack);
