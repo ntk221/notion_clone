@@ -31,6 +31,7 @@ const SignupForm: React.FC = () => {
 
   const [errorMessage, setErrorMessage] = useState<string>("");
 
+  // ユーザーを新規登録して，サーバーが返したJWTをブラウザのストレージに保存する
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
