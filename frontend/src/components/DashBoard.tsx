@@ -3,7 +3,7 @@ import SideBar from './SideBar'
 
 const DashBoard = () => {
   return (
-      <SideBar userName='hoge'articles={["記事1", "記事２", "記事３"]} onNewArticleClick={() => {console.log("hoge")}}/>
+      <SideBar username='knitta' notes={["記事1", "記事２", "記事３"]} onNoteClick={(note: string) => {console.log(note)}} onAddNoteClick={() => {console.log("hoge")}}/>
   )
 }
 
