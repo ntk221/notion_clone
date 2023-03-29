@@ -1,36 +1,70 @@
-import React from 'react';
-import { Box, Text, Button, VStack} from "@chakra-ui/react";
+import React from "react";
+import {
+  Box,
+  Flex,
+  IconButton,
+  Text,
+  VStack,
+  Stack,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+} from "@chakra-ui/react";
 
-interface SidebarProps {
-    userName: string;
-    articles: string[];
-    onNewArticleClick: () => void;
-}
+type SideBarProps = {
+  username: string;
+  notes: string[];
+  onNoteClick: (note: string) => void;
+  onAddNoteClick: () => void;
+};
 
-const SideBar: React.FC<SidebarProps> = ({ userName, articles, onNewArticleClick}) => {
+const SideBar: React.FC<SideBarProps> = ({
+  username,
+  notes,
+  onNoteClick,
+  onAddNoteClick,
+}) => {
   return (
-    <Box w="200px" h="100vh" bgColor="gray.100" p="4">
-        <Text fontSize="xl" fontWeight="bold" mb="8">
-            {userName}
+    <Box w="250px" h="100vh" borderRight="1px" borderColor="gray.200" px="4">
+      <Flex alignItems="center" mt="4">
+        <Text fontSize="xl" fontWeight="bold">
+          {username}
         </Text>
-        <VStack spacing="4" align="stretch">
-            <Text fontWeight="bold">記事一覧</Text>
-            {
-                articles.map((article) => (
-                    <Text key={article}>{article}</Text>
-                ))
-            }
-        </VStack>
-        <Button
-        colorScheme="blue"
-        mt="8"
-        w="full"
-        onClick={onNewArticleClick}
-        >
-            新規記事を作成
-        </Button>
+      </Flex>
+      <Box mt="8">
+        <Stack mt="4">
+          {notes.length > 0 ? (
+            <Accordion allowToggle>
+              <AccordionItem>
+                  <AccordionButton>
+                    <Box flex="1" textAlign="left">
+                        Notes
+                    </Box>
+                  </AccordionButton>
+                <AccordionPanel pb={4}>
+                  <VStack>
+                    {notes.map((note) => (
+                      <Text
+                        key={note}
+                        as="button"
+                        color="blue.500"
+                        onClick={() => onNoteClick(note)}
+                      >
+                        {note}
+                      </Text>
+                    ))}
+                  </VStack>
+                </AccordionPanel>
+              </AccordionItem>
+            </Accordion>
+          ) : (
+            <Text color="gray.400">No notes yet.</Text>
+          )}
+        </Stack>
+      </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default SideBar
+export default SideBar;
