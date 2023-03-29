@@ -16,7 +16,7 @@ const AuthLayout = () => {
           },
         });
         if (response.status === 200) {
-          navigate("/");
+          navigate("/dashboard");
         } 
       } catch (error) {
         console.error(error);
