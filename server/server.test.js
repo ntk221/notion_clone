@@ -1,36 +1,46 @@
-const request = require("supertest"); // サーバーの起動用
+const request = require("supertest");
 const app = require("./server");
-const { MongoMemoryServer }= require("mongodb-memory-server");
-const mongoose = require("mongoose");
 
-jest.setTimeout(100000);
+describe("GET /user", () => {
+  let token;
 
-let mockDb;
-
-beforeAll(async () => {
-    if (mongoose.connection.readyState !== 0)
-      await mongoose.disconnect();
-    mockDb = await MongoMemoryServer.create();
-    const uri =  mockDb.getUri();
-    await mongoose.connect(uri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+  beforeAll(async () => {
+    // テスト用のユーザーを作成してトークンを取得する
+    const user = {
+      email: "test@example.com",
+      password: "password123",
+      username: "testuser"
+    };
+    const response = await request(app).post("/signup").send(user);
+    token = response.body.token;
   });
 
-afterAll(async () => {
-  await mongoose.disconnect();
-  await mockDb.stop();
-  await app.close();
-});
+  test("should return user information with valid token", async () => {
+    const response = await request(app)
+      .get("/user")
+      .set("Authorization", `Bearer ${token}`);
 
-describe("POST /signup", () => {
-    test("登録が成功したらJWTトークンを返す", async () => {
-        const response = await request(app)
-            .post("/signup")
-            .send({ email: "test@example.com", password: "password" });
+    expect(response.statusCode).toBe(200);
+    expect(response.body.email).toBe("test@example.com");
+    expect(response.body.username).toBe("testuser");
+  });
 
-        expect(response.statusCode).toBe(201);
-        expect(response.body.token).toBeDefined();
-    });
+  test("should return 401 error with invalid token", async () => {
+    const response = await request(app)
+      .get("/user")
+      .set("Authorization", "Bearer invalidtoken");
+
+    expect(response.statusCode).toBe(401);
+    expect(response.body.error).toBe("Authentication failed");
+  });
+
+  test("should return 404 error with non-existent user ID", async () => {
+    const response = await request(app)
+      .get("/user")
+      .set("Authorization", `Bearer ${token}`)
+      .query({ userId: "nonexistentuserid" });
+
+    expect(response.statusCode).toBe(404);
+    expect(response.body.error).toBe("User not found");
+  });
 });
