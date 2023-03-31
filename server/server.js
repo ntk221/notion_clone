@@ -1,77 +1,21 @@
 const { json } = require("express");
 const helmet = require("helmet");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const mongoose = require("mongoose");
 const express = require("express");
-const User = require("./models/User");
-require("dotenv").config();
+const connectDB = require("./libs/db");
+
+const routes = require("./routes");
 
 const app = express();
 app.use(helmet());
 app.use(json());
 
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  app.listen(8001, () => {
-    console.log("start listening");
+connectDB().then(() => {
+    app.listen(8001, () => {
+      console.log("start listening");
+    });
   });
-})
-.catch((err) => {
-  console.error("MongoDB connection err:", err);
-  app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ error: "Internal Server Error" });
-  });
-});
 
-// GET '/'
-app.get("/", (req, res) => {
-  res.status(200).send("hello\n");
-});
-
-// 新規ユーザー登録
-app.post("/signup", async (req, res, next) => {
-  const hashedPassword = await bcrypt.hash(req.body.password, 5);
-  const user = new User({
-    email: req.body.email,
-    password: hashedPassword,
-    username: req.body.username,
-  });
-  try {
-    await user.save();
-    const token = await jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
-    res.status(201).json({ token });
-  } catch (err) {
-    if (err.name === "MongoServerError" && err.code === 11000) {
-      if (err.keyPattern.email) {
-        return res.status(409).json({ error: "Email already exists" });
-      } else if (err.keyPattern.username) {
-        return res.status(409).json({ error: "Username already exists" });
-      }
-    }
-    next(err);
-  }
-});
-
-const verifyToken = async(req, res, next) => {
-  try {
-    const token = req.headers.authorization.split(" ")[1];
-    const decodedToken = await jwt.verify(token, process.env.SECRET_KEY);
-    req.userData = { userId: decodedToken.userId };
-    next();
-  } catch (err) {
-    res.status(401).json({ error: "Authentication failed" });
-  }
-}
-
-// GET '/check-auth'
-app.get("/check-auth", verifyToken, (req, res) => {
-  res.status(200).json({ message: "Authentication succeeded" });
-})
+app.use("/", routes);
 
 // 包括的エラーハンドリング
 app.use((err, req, res, next) => {
