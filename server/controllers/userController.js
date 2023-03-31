@@ -9,6 +9,7 @@ exports.getUser = async (req, res, next) => {
       res.status(200).json({
         email: user.email,
         username: user.username,
+        id: user._id
       });
     } catch (err) {
       next(err);
