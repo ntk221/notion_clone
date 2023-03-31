@@ -2,7 +2,6 @@ import React from "react";
 import {
   Box,
   Flex,
-  IconButton,
   Text,
   VStack,
   Stack,
@@ -16,14 +15,12 @@ type SideBarProps = {
   username: string;
   notes: string[];
   onNoteClick: (note: string) => void;
-  onAddNoteClick: () => void;
 };
 
 const SideBar: React.FC<SideBarProps> = ({
   username,
   notes,
   onNoteClick,
-  onAddNoteClick,
 }) => {
   return (
     <Box w="250px" h="100vh" borderRight="1px" borderColor="gray.200" px="4">

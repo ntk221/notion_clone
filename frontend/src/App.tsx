@@ -3,9 +3,9 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthLayout from "./components/Layout/AuthLayout";
 import AppLayout from "./components/Layout/AppLayout";
-import SignupForm from "./components/SignupForm";
-import LoginForm from "./components/LoginForm";
-import DashBoard from "./components/DashBoard";
+import SignupForm from "./components/Pages/SignupForm";
+import LoginForm from "./components/Pages/LoginForm";
+import DashBoard from "./components/Pages/DashBoard";
 
 function App() {
   return (
