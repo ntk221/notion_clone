@@ -2,9 +2,9 @@ const User = require("../models/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
-exports.signup = async (req, res, next) => {
+exports.signup = async (req, res, next, UserModel = User) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 5);
-    const user = new User({
+    const user = new UserModel({
       email: req.body.email,
       password: hashedPassword,
       username: req.body.username,
