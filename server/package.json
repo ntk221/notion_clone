@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "jest": "^29.5.0",
+    "jest-mock-extended": "^3.0.4",
     "mongodb-memory-server": "^8.12.1",
     "supertest": "^6.3.3"
   }
