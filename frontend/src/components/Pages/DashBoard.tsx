@@ -1,47 +1,61 @@
-import React, {useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
-import SideBar from '../SideBar'
-import Home from './Home';
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import SideBar from "../SideBar";
+import Article from "./Article";
 import axios from "axios";
-
+import fetchArticles from "../../api/articleApi";
+import getUserData from "../../api/userApi";
 
 const DashBoard = () => {
   const [userData, setUserData] = useState({
     email: "",
     username: "",
-    id: ""
+    id: "",
   });
 
-  useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const response = await axios.get("/user", {
-          headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        }},);
-        setUserData(response.data);
-        console.log(userData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getUserData();
-  }, [localStorage.getItem("token")]);
+  const [userArticles, setUserArticles] = useState([]);
 
-  const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) {
+    if (token) {
+      const fetchUserData = async () => {
+        const userData = await getUserData();
+        setUserData(userData);
+      };
+      fetchUserData();
+    } else {
       navigate("/");
     }
   }, []);
 
+  useEffect(() => {
+    const getArticles = async () => {
+      try {
+        const articles = await fetchArticles(userData.id); // fetchArticlesを呼び出し
+        setUserArticles(articles); // 取得した記事一覧をstateにセット
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    if (userData.id) {
+      getArticles();
+    }
+  }, [userData]);
+
+  const navigate = useNavigate();
+
   return (
     <>
-        <SideBar username={ userData.username } notes={["記事1", "記事２", "記事３"]} onNoteClick={(note: string) => {console.log(note)}}/>
-        <Home userId={ userData.id }/>
+      <SideBar
+        username={userData.username}
+        notes={["記事1", "記事２", "記事３"]}
+        onNoteClick={(note: string) => {
+          console.log(note);
+        }}
+      />
+      <Article userId={userData.id} />
     </>
-  )
-}
+  );
+};
 
-export default DashBoard
+export default DashBoard;

@@ -45,7 +45,7 @@ const SignupForm: React.FC = () => {
       const token = response.data.token;
       localStorage.setItem("token", token);
       console.log(response);
-      navigate("/home");
+      navigate("/dashboard");
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error(error.response?.data.error);
