@@ -10,16 +10,25 @@ import {
   AccordionButton,
   AccordionPanel,
 } from "@chakra-ui/react";
+import { Document } from "mongoose";
+
+interface IArticle extends Document {
+  author: string; 
+  body: string;
+  title: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 type SideBarProps = {
   username: string;
-  notes: string[];
+  userArticles: IArticle[];
   onNoteClick: (note: string) => void;
 };
 
 const SideBar: React.FC<SideBarProps> = ({
   username,
-  notes,
+  userArticles,
   onNoteClick,
 }) => {
   return (
@@ -31,7 +40,7 @@ const SideBar: React.FC<SideBarProps> = ({
       </Flex>
       <Box mt="8">
         <Stack mt="4">
-          {notes.length > 0 ? (
+          {userArticles.length > 0 ? (
             <Accordion allowToggle>
               <AccordionItem>
                   <AccordionButton>
@@ -41,14 +50,14 @@ const SideBar: React.FC<SideBarProps> = ({
                   </AccordionButton>
                 <AccordionPanel pb={4}>
                   <VStack>
-                    {notes.map((note) => (
+                    {userArticles.map((article) => (
                       <Text
-                        key={note}
+                        key={article._id}
                         as="button"
                         color="blue.500"
-                        onClick={() => onNoteClick(note)}
+                        onClick={() => onNoteClick(article.title)}
                       >
-                        {note}
+                        {article.title}
                       </Text>
                     ))}
                   </VStack>
