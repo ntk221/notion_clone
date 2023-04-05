@@ -48,7 +48,7 @@ const DashBoard = () => {
     <>
       <SideBar
         username={userData.username}
-        notes={["記事1", "記事２", "記事３"]}
+        userArticles={userArticles}
         onNoteClick={(note: string) => {
           console.log(note);
         }}
