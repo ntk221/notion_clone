@@ -2,11 +2,11 @@ import React from 'react'
 import { Box, Button } from "@chakra-ui/react";
 import axios from 'axios';
 
-type HomeProps = {
+type ArticleProps = {
     userId: string;
 }
 
-const Home: React.FC<HomeProps> = ({ userId }) => {
+const Article: React.FC<ArticleProps> = ({ userId }) => {
     const handleCreateArticle = async () => {
         try {
             const response = await axios.post("/articles", {
@@ -16,9 +16,10 @@ const Home: React.FC<HomeProps> = ({ userId }) => {
             },
             {
                 headers: {
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
                     "Contyent-Type": "application/json",
                     Accept: "application/json",
-            },
+                },
             });
             console.log(response.data);
         } catch (error) {
@@ -33,4 +34,4 @@ const Home: React.FC<HomeProps> = ({ userId }) => {
   )
 }
 
-export default Home
+export default Article
