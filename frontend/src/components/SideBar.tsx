@@ -10,27 +10,24 @@ import {
   AccordionButton,
   AccordionPanel,
 } from "@chakra-ui/react";
-import { Document } from "mongoose";
+import { IArticle } from "../types/articleType"
+import { useNavigate } from "react-router-dom";
 
-interface IArticle extends Document {
-  author: string; 
-  body: string;
-  title: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
 
 type SideBarProps = {
   username: string;
   userArticles: IArticle[];
-  onNoteClick: (note: string) => void;
 };
 
 const SideBar: React.FC<SideBarProps> = ({
   username,
   userArticles,
-  onNoteClick,
 }) => {
+  const navigate = useNavigate();
+
+  const handleArticleClick = (article: IArticle) => {
+    navigate(`/dashboard/article/${article._id}`);
+  };
   return (
     <Box w="250px" h="100vh" borderRight="1px" borderColor="gray.200" px="4">
       <Flex alignItems="center" mt="4">
@@ -43,11 +40,11 @@ const SideBar: React.FC<SideBarProps> = ({
           {userArticles.length > 0 ? (
             <Accordion allowToggle>
               <AccordionItem>
-                  <AccordionButton>
-                    <Box flex="1" textAlign="left">
-                        Notes
-                    </Box>
-                  </AccordionButton>
+                <AccordionButton>
+                  <Box flex="1" textAlign="left">
+                    Notes
+                  </Box>
+                </AccordionButton>
                 <AccordionPanel pb={4}>
                   <VStack>
                     {userArticles.map((article) => (
@@ -55,7 +52,7 @@ const SideBar: React.FC<SideBarProps> = ({
                         key={article._id}
                         as="button"
                         color="blue.500"
-                        onClick={() => onNoteClick(article.title)}
+                        onClick={() => handleArticleClick(article)}
                       >
                         {article.title}
                       </Text>
