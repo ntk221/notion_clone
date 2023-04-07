@@ -5,9 +5,15 @@ import AuthLayout from "./components/Layout/AuthLayout";
 import AppLayout from "./components/Layout/AppLayout";
 import SignupForm from "./components/Pages/SignupForm";
 import LoginForm from "./components/Pages/LoginForm";
-import DashBoard from "./components/Pages/DashBoard";
+import Home from "./components/Pages/Home";
+import Article from "./components/Pages/Article";
+
+const NotFound = () => {
+  return <h1>404 Not Found</h1>;
+};
 
 function App() {
+
   return (
     <BrowserRouter>
       <Routes>
@@ -15,9 +21,11 @@ function App() {
           <Route path="signup" element={<SignupForm />} />
           <Route path="login" element={<LoginForm />} />
         </Route>
-        <Route path="/" element={<AppLayout />}>
-          <Route path="dashboard" element={<DashBoard/>} />
+        <Route path="/dashboard" element={<AppLayout />}>
+          <Route path="home" element={<Home />} />
+          <Route path="article/:id" element={<Article />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

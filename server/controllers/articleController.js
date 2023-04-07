@@ -3,9 +3,7 @@ const Article = require("../models/Article");
 exports.getArticles = async (req, res) => {
     try {
         const { userId } = req.query;
-        console.log(userId);
         const articles = await Article.find({ author : userId});
-        console.log(articles);
         res.status(200).json(articles);
     } catch (err) {
         res.status(500).json({ message: err.message });
@@ -15,6 +13,7 @@ exports.getArticles = async (req, res) => {
 exports.postArticle = async (req, res) => {
     try {
         const { title, body, author } = req.body;
+        console.log(title, body, author);
         const article = new Article({
             title,
             body,
