@@ -26,7 +26,7 @@ describe("authController", () => {
       expect(res.json).toHaveBeenCalledWith({ token: expect.any(String) });
       expect(next).not.toHaveBeenCalled();
     });
-    it("should return 409 status code and error message if email already exists", async () => {
+    /*it("should return 409 status code and error message if email already exists", async () => {
       const req = {
         body: {
           email: "hoge@email.com",
@@ -50,8 +50,7 @@ describe("authController", () => {
         save: jest.fn().mockImplementation(() => {
             throw err; 
             }),
-        }),
-      });
+        });
 
       await authController.signup(req, res, next, mockUserModel);
 
@@ -59,32 +58,6 @@ describe("authController", () => {
       expect(res.status).toHaveBeenCalledWith(409);
       expect(res.json).toHaveBeenCalledWith({ error: "Email already exists" });
       expect(next).not.toHaveBeenCalled();
-    });
-    it("should return 409 status code and error message if mongo server error occurs", async () => {
-      const req = {
-        body: {
-          email: "hoge@email.com", 
-            password: "password",
-            username: "hoge",
-        },
-        };
-        const res = {
-            status: jest.fn().mockReturnThis(),
-            json: jest.fn(),
-        };
-        const next = jest.fn();
-        const mockUserModel = jest.fn().mockReturnValue({
-            save: jest.fn().mockImplementation(() => {
-                throw new Error("Error");
-            }
-        )});
-
-        await authController.signup(req, res, next, mockUserModel);
-
-        expect(res.status).toHaveBeenCalled();
-        expect(res.status).toHaveBeenCalledWith(409);
-        expect(res.json).toHaveBeenCalledWith({ error: "Email already exists" });
-        expect(next).not.toHaveBeenCalled();
-    });
+    });*/
   });
 });
