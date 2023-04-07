@@ -10,10 +10,22 @@ exports.getArticles = async (req, res) => {
     }
 };
 
+// idを含むリクエストから，記事の内容を取得して返す
+exports.getArticleById = async (req, res) => {
+    try {
+        const article = await Article.findById(req.params.id);
+        if (!article) {
+            return res.status(404).json({ message: "Article not found" });
+        }
+        res.status(200).json(article);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+};
+
 exports.postArticle = async (req, res) => {
     try {
         const { title, body, author } = req.body;
-        console.log(title, body, author);
         const article = new Article({
             title,
             body,

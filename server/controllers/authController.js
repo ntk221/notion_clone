@@ -10,10 +10,10 @@ exports.signup = async (req, res, next, UserModel = User) => {
       username: req.body.username,
     });
     try {
-      await user.save();
       const token = await jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
       res.status(201).json({ token });
     } catch (err) {
+      // ユーザー名またはメールアドレスが既に存在する場合
       if (err.name === "MongoServerError" && err.code === 11000) {
         if (err.keyPattern.email) {
           return res.status(409).json({ error: "Email already exists" });
