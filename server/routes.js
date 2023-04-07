@@ -22,4 +22,6 @@ router.get("/articles", verifyToken, articleController.getArticles);
 
 router.post("/articles", verifyToken, articleController.postArticle);
 
+router.get("/articles/:id", verifyToken, articleController.getArticleById);
+
 module.exports = router;
