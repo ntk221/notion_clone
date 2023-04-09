@@ -19,25 +19,27 @@ type ArticleContextValue = {
   userArticles: IArticle[];
   selectedArticle: IArticle | null;
   setSelectedArticle: React.Dispatch<React.SetStateAction<IArticle | null>>;
+  setUserArticles: React.Dispatch<React.SetStateAction<IArticle[]>>;
 };
 
 export const ArticleContext = createContext<ArticleContextValue>({
   userArticles: [],
   selectedArticle: null,
   setSelectedArticle: () => {},
+  setUserArticles: () => {},
 });
 
 const AppLayout = () => {
+
   const [userData, setUserData] = useState({
     email: "",
     username: "",
     id: "",
   });
-  const [userArticles, setUserArticles] = useState([]);
-
+  const [userArticles, setUserArticles] = useState<IArticle[]>([]);
   const [selectedArticle, setSelectedArticle] = useState<IArticle | null>(null);
 
-  // ログインしているユーザーの情報を取得する
+  // ログインしているユーザーの情報を取得して，stateにセットする
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -51,7 +53,7 @@ const AppLayout = () => {
     }
   }, []);
 
-  // ユーザーの記事一覧を取得する
+  // ユーザーの記事一覧を取得して，stateにセットする
   useEffect(() => {
     const getArticles = async () => {
       try {
@@ -67,17 +69,20 @@ const AppLayout = () => {
   }, [userData]);
 
   const navigate = useNavigate();
+
   return (
     <ChakraProvider>
       <Box display={"flex"}>
         <ArticleContext.Provider
-          value={{ userArticles, selectedArticle, setSelectedArticle }}
+          value={{
+            userArticles,
+            selectedArticle,
+            setSelectedArticle,
+            setUserArticles,
+          }}
         >
           <UserContext.Provider value={userData}>
-            <SideBar
-              username={userData.username}
-              userArticles={userArticles}
-            />
+            <SideBar username={userData.username} userArticles={userArticles} />
             <Outlet />
           </UserContext.Provider>
         </ArticleContext.Provider>
