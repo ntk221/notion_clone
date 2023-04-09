@@ -8,13 +8,13 @@ import { UserContext } from '../Layout/AppLayout';
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const user  = useContext(UserContext);
-  const { setSelectedArticle } = useContext(ArticleContext);
+  const { setSelectedArticle, setUserArticles } = useContext(ArticleContext);
 
   const handleCreateArticle = async () => {
     try {
       const response = await axios.post("/articles", {
-        title: "無題",
-        body: "ここに記事の内容を書いてください",
+        title: "",
+        body: "",
         author: user.id,
       },
       {
@@ -24,8 +24,13 @@ const Home: React.FC = () => {
           Accept: "application/json",
         },
       });
-      console.log(response.data);
+      
       setSelectedArticle(response.data);
+
+      const addedArticle = response;
+
+      setUserArticles((prev) => [...prev, addedArticle.data]);
+
       navigate(`/dashboard/article/${response.data._id}`);
     } catch (error) {
       console.log(error);
