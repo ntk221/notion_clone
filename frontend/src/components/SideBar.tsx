@@ -5,29 +5,28 @@ import {
   Text,
   VStack,
   Stack,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
+  Button,
 } from "@chakra-ui/react";
-import { IArticle } from "../types/articleType"
+import { IArticle } from "../types/articleType";
 import { useNavigate } from "react-router-dom";
-
+import { useContext } from "react";
+import { ArticleContext } from "./Layout/AppLayout";
 
 type SideBarProps = {
   username: string;
   userArticles: IArticle[];
 };
 
-const SideBar: React.FC<SideBarProps> = ({
-  username,
-  userArticles,
-}) => {
+const SideBar: React.FC<SideBarProps> = ({ username, userArticles }) => {
   const navigate = useNavigate();
 
+  const { setSelectedArticle } = useContext(ArticleContext);
+
   const handleArticleClick = (article: IArticle) => {
+    setSelectedArticle(article);
     navigate(`/dashboard/article/${article._id}`);
   };
+
   return (
     <Box w="250px" h="100vh" borderRight="1px" borderColor="gray.200" px="4">
       <Flex alignItems="center" mt="4">
@@ -38,29 +37,23 @@ const SideBar: React.FC<SideBarProps> = ({
       <Box mt="8">
         <Stack mt="4">
           {userArticles.length > 0 ? (
-            <Accordion allowToggle>
-              <AccordionItem>
-                <AccordionButton>
-                  <Box flex="1" textAlign="left">
-                    Notes
-                  </Box>
-                </AccordionButton>
-                <AccordionPanel pb={4}>
-                  <VStack>
-                    {userArticles.map((article) => (
-                      <Text
-                        key={article._id}
-                        as="button"
-                        color="blue.500"
-                        onClick={() => handleArticleClick(article)}
-                      >
-                        {article.title}
-                      </Text>
-                    ))}
-                  </VStack>
-                </AccordionPanel>
-              </AccordionItem>
-            </Accordion>
+            <Box>
+              <Box flex="1" textAlign="left" mb={2}>
+                Notes
+              </Box>
+              <VStack spacing={0}>
+                {userArticles.map((article) => (
+                  <Button
+                    key={article._id}
+                    variant="ghost"
+                    colorScheme="blue"
+                    onClick={() => handleArticleClick(article)}
+                  >
+                    {article.title ? article.title : "無題"}
+                  </Button>
+                ))}
+              </VStack>
+            </Box>
           ) : (
             <Text color="gray.400">No notes yet.</Text>
           )}
