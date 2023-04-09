@@ -22,7 +22,7 @@ function App() {
           <Route path="login" element={<LoginForm />} />
         </Route>
         <Route path="/dashboard" element={<AppLayout />}>
-          <Route path="home" element={<Home />} />
+          <Route path="" element={<Home />} />
           <Route path="article/:id" element={<Article />} />
         </Route>
         <Route path="*" element={<NotFound />} />
