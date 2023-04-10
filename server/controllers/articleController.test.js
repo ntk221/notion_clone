@@ -78,4 +78,40 @@ describe("articleController", () => {
       expect(res.json).toHaveBeenCalledWith(article);
     });
   });
+
+  describe("deleteArticle", () => {
+    it("should delete the article with the given id", async () => {
+      // arrange
+      const articleId = "test-article-id";
+      const article = {
+        _id: articleId,
+        title: "test-article-1",
+        body: "test-article-1-body",
+        remove: jest.fn(),
+      };
+
+      Article.findById = jest.fn().mockResolvedValueOnce(article);
+
+      const req = {
+        params: { id: articleId }
+      };
+
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      };
+
+      // act
+
+      await articleController.deleteArticle(req, res);
+
+      // assert
+
+      expect(Article.findById).toHaveBeenCalledWith(articleId);
+      expect(article.remove).toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({ message: "Article deleted" });
+
+    });
+  });
 });
