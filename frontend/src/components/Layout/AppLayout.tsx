@@ -2,32 +2,13 @@ import React from "react";
 import { ChakraProvider, Box } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import SideBar from "../SideBar";
-import { useState, useEffect, createContext } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import fetchArticles from "../../api/articlesApi";
 import getUserData from "../../api/userApi";
-import { User } from "../../types/userType";
 import { IArticle } from "../../types/articleType";
-
-export const UserContext = createContext<User>({
-  id: "",
-  username: "",
-  email: "",
-});
-
-type ArticleContextValue = {
-  userArticles: IArticle[];
-  selectedArticle: IArticle | null;
-  setSelectedArticle: React.Dispatch<React.SetStateAction<IArticle | null>>;
-  setUserArticles: React.Dispatch<React.SetStateAction<IArticle[]>>;
-};
-
-export const ArticleContext = createContext<ArticleContextValue>({
-  userArticles: [],
-  selectedArticle: null,
-  setSelectedArticle: () => {},
-  setUserArticles: () => {},
-});
+import { ArticleContext } from "../../contexts/contexts";
+import { UserContext } from "../../contexts/contexts";
 
 const AppLayout = () => {
 

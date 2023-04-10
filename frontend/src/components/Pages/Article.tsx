@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
-import { ArticleContext } from '../Layout/AppLayout';
+import { ArticleContext } from "../../contexts/contexts";
 import { useState } from 'react';
 import { Box, Button, FormControl, Input, Textarea } from '@chakra-ui/react';
 import { useEffect } from 'react';
+import { IArticle } from '../../types/articleType';
 
 const Article = () => {
 
-  const { selectedArticle, userArticles, setSelectedArticle } = useContext(ArticleContext);
+  const { selectedArticle, userArticles, setSelectedArticle, setUserArticles } = useContext(ArticleContext);
   const [editTitle, setEditTitle] = useState(selectedArticle?.title || "");
   const [editBody, setEditBody] = useState(selectedArticle?.body || "");
 
@@ -26,7 +27,7 @@ const Article = () => {
     event.preventDefault();
 
     // ここに記事の更新処理を書く
-    const updatedArticle = userArticles.map((article) => {
+    const updatedArticles = userArticles.map((article) => {
       if (article._id === selectedArticle._id) {
         return {
           ...article,
@@ -35,11 +36,9 @@ const Article = () => {
         };
       }
       return article;
-    });
-    // 編集フォームをリセット
-    setEditTitle("");
-    setEditBody("");
-    setSelectedArticle(null);
+    }) as IArticle[];
+
+    setUserArticles(updatedArticles);
   }
 
   return (

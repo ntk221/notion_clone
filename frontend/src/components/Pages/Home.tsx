@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import { Box, Button } from "@chakra-ui/react";
 import { useNavigate } from 'react-router-dom';
-import { ArticleContext } from '../Layout/AppLayout';
+import { ArticleContext, UserContext } from '../../contexts/contexts';
 import axios from "axios";
-import { UserContext } from '../Layout/AppLayout';
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
@@ -24,7 +23,7 @@ const Home: React.FC = () => {
           Accept: "application/json",
         },
       });
-      
+
       setSelectedArticle(response.data);
 
       const addedArticle = response;
