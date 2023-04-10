@@ -10,7 +10,7 @@ import {
 import { IArticle } from "../types/articleType";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { ArticleContext } from "./Layout/AppLayout";
+import { ArticleContext } from "../contexts/contexts";
 
 type SideBarProps = {
   username: string;
