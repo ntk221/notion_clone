@@ -24,11 +24,11 @@ const Home: React.FC = () => {
         },
       });
 
-      setSelectedArticle(response.data);
+      await setSelectedArticle(response.data);
 
       const addedArticle = response;
 
-      setUserArticles((prev) => [...prev, addedArticle.data]);
+      await setUserArticles((prev) => [...prev, addedArticle.data]);
 
       navigate(`/dashboard/article/${response.data._id}`);
     } catch (error) {
