@@ -1,13 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 import { ArticleContext } from "../../contexts/contexts";
-import { useState } from 'react';
-import { Box, Button, FormControl, Input, Textarea } from '@chakra-ui/react';
-import { useEffect } from 'react';
-import { IArticle } from '../../types/articleType';
+import { useState } from "react";
+import { Box, Button, FormControl, Input, Textarea } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { IArticle } from "../../types/articleType";
+import { postArticle } from "../../api/articlesApi";
 
 const Article = () => {
-
-  const { selectedArticle, userArticles, setSelectedArticle, setUserArticles } = useContext(ArticleContext);
+  const { selectedArticle, userArticles, setSelectedArticle, setUserArticles } =
+    useContext(ArticleContext);
   const [editTitle, setEditTitle] = useState(selectedArticle?.title || "");
   const [editBody, setEditBody] = useState(selectedArticle?.body || "");
 
@@ -22,11 +23,19 @@ const Article = () => {
     return <div>No article selected</div>;
   }
 
-
-  const handleSubmit = (event: React.FormEvent<HTMLDivElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLDivElement>) => {
     event.preventDefault();
 
-    // ここに記事の更新処理を書く
+    const response = await postArticle(
+      editTitle,
+      editBody,
+      selectedArticle
+    );
+
+    if (!response) {
+      return;
+    }
+
     const updatedArticles = userArticles.map((article) => {
       if (article._id === selectedArticle._id) {
         return {
@@ -38,8 +47,9 @@ const Article = () => {
       return article;
     }) as IArticle[];
 
-    setUserArticles(updatedArticles);
-  }
+    await setUserArticles(updatedArticles);
+    await setSelectedArticle(response.data);
+  };
 
   return (
     <Box fontSize="xl" mt="4" w="80%" mx="auto">
@@ -76,6 +86,6 @@ const Article = () => {
       </FormControl>
     </Box>
   );
-}
+};
 
 export default Article;
