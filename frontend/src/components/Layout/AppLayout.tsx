@@ -38,8 +38,8 @@ const AppLayout = () => {
   useEffect(() => {
     const getArticles = async () => {
       try {
-        const articles = await fetchArticles(userData.id); // fetchArticlesを呼び出し
-        setUserArticles(articles); // 取得した記事一覧をstateにセット
+        const articles : IArticle[] = await fetchArticles(userData.id); // fetchArticlesを呼び出し
+        setUserArticles(articles.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())); // 取得した記事一覧をstateにセット
       } catch (error) {
         console.log(error);
       }
