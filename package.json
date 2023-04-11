@@ -12,6 +12,10 @@
   "dependencies": {
     "@types/jsonwebtoken": "^9.0.1",
     "dotenv": "^16.0.3",
-    "mongoose": "^7.0.2"
+    "mongoose": "^7.0.2",
+    "react-icons": "^4.8.0"
+  },
+  "devDependencies": {
+    "date-fns": "^2.29.3"
   }
 }
