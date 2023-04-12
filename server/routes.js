@@ -26,4 +26,6 @@ router.get("/articles/:id", verifyToken, articleController.getArticleById);
 
 router.delete("/articles/:id", verifyToken, articleController.deleteArticle);
 
+router.put("/articles/:id", verifyToken, articleController.updateArticle);
+
 module.exports = router;
