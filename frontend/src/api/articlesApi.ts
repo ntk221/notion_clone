@@ -39,6 +39,27 @@ export const postArticle = async(editTitle : string, editBody : string, selected
     }
   };
 
+export const updateArticle = async(editTitle : string, editBody : string, selectedArticle : IArticle) => {
+  try {
+        const response = await axios.put(`/articles/${selectedArticle._id}`, {
+        title: editTitle,
+        body: editBody,
+
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
 export const deleteArticle = async(selectedArticle : IArticle) => {
   try {
         const response = await axios.delete(`/articles/${selectedArticle._id}`, {

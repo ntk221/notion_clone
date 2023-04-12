@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Box, Button, FormControl, Input, Textarea } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { IArticle } from "../../types/articleType";
-import { postArticle } from "../../api/articlesApi";
+import { updateArticle } from "../../api/articlesApi";
 
 const Article = () => {
   const { selectedArticle, userArticles, setSelectedArticle, setUserArticles } =
@@ -26,7 +26,7 @@ const Article = () => {
   const handleUpdate = async (event: React.FormEvent<HTMLDivElement>) => {
     event.preventDefault();
 
-    const response = await postArticle(editTitle, editBody, selectedArticle);
+    const response = await updateArticle(editTitle, editBody, selectedArticle);
 
     if (!response) {
       return;
@@ -43,8 +43,8 @@ const Article = () => {
       return article;
     }) as IArticle[];
 
-    await setUserArticles(updatedArticles);
-    await setSelectedArticle(response.data);
+    setUserArticles(updatedArticles);
+    setSelectedArticle(response.data);
   };
 
   return (
