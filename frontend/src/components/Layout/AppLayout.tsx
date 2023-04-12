@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import SideBar from "../SideBar";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import fetchArticles from "../../api/articlesApi";
+import { fetchArticles } from "../../api/articlesApi";
 import getUserData from "../../api/userApi";
 import { IArticle } from "../../types/articleType";
 import { ArticleContext } from "../../contexts/contexts";
@@ -53,7 +53,7 @@ const AppLayout = () => {
 
   return (
     <ChakraProvider>
-      <Box display={"flex"}>
+      <Box display={"flex"} height="100vh" >
         <ArticleContext.Provider
           value={{
             userArticles,
