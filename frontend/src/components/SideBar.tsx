@@ -4,7 +4,7 @@ import { IArticle } from "../types/articleType";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { ArticleContext } from "../contexts/contexts";
-import { DeleteIcon, SmallAddIcon, } from "@chakra-ui/icons";
+import { DeleteIcon, SmallAddIcon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/react";
 import { FiLogOut } from "react-icons/fi";
 import { deleteArticle } from "../api/articlesApi";
@@ -36,8 +36,8 @@ const SideBar: React.FC<SideBarProps> = ({ username, userArticles }) => {
   };
 
   return (
-    <Box w="250px" minH="100vh" borderRight="1px" borderColor="gray.200" px="4">
-      <Flex alignItems="center" justifyContent={"space-between"} mb="2" mt="3">
+    <Box minH="100vh" borderRight="1px" borderColor="gray.200" px="4" style={{ flexShrink: 0, width: "200px" }}>
+      <Flex alignItems="left" justifyContent={"space-between"} mb="2" mt="3">
         <Text fontSize="md" fontWeight="bold">
           {username}
         </Text>
@@ -52,8 +52,12 @@ const SideBar: React.FC<SideBarProps> = ({ username, userArticles }) => {
         />
       </Flex>
       <Stack>
-        {userArticles.length > 0  ? (
-          <UserArticleList articles={userArticles} handleArticleClick={handleArticleClick} handleDeleteClick={handleDeleteClick}/>
+        {userArticles.length > 0 ? (
+          <UserArticleList
+            articles={userArticles}
+            handleArticleClick={handleArticleClick}
+            handleDeleteClick={handleDeleteClick}
+          />
         ) : (
           <Text color="gray.400">No notes yet.</Text>
         )}
@@ -68,17 +72,33 @@ type UserArticleListProps = {
   articles: IArticle[];
   handleArticleClick: (article: IArticle) => void;
   handleDeleteClick: (article: IArticle) => void;
-}
+};
 
-const UserArticleList : React.FC<UserArticleListProps> = ({ articles , handleArticleClick, handleDeleteClick }) => {
+const UserArticleList: React.FC<UserArticleListProps> = ({
+  articles,
+  handleArticleClick,
+  handleDeleteClick,
+}) => {
   return (
-    <Box>
+    <Box
+      maxW="200px"
+      w="full"
+      minH="100vh"
+      px="4"
+    >
       <Flex alignItems="left" justifyContent="space-between" mt="4">
-        <Box flex="1" textAlign={"center"} fontSize="sm" fontWeight="bold" mb="4" color={"gray400"}>
+        <Box
+          flex="1"
+          textAlign={"center"}
+          fontSize="sm"
+          fontWeight="bold"
+          mb="4"
+          color={"gray400"}
+        >
           記事一覧
         </Box>
         <IconButton
-          icon={<SmallAddIcon w={5} h={5} opacity="0.80" color={"gray.600"}/>}
+          icon={<SmallAddIcon w={5} h={5} opacity="0.80" color={"gray.600"} />}
           variant="ghost"
           colorScheme="gray"
           aria-label="Plus"
