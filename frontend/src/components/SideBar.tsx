@@ -7,6 +7,7 @@ import { ArticleContext } from "../contexts/contexts";
 import { DeleteIcon, SmallAddIcon, } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/react";
 import { FiLogOut } from "react-icons/fi";
+import { deleteArticle } from "../api/articlesApi";
 
 type SideBarProps = {
   username: string;
@@ -27,6 +28,13 @@ const SideBar: React.FC<SideBarProps> = ({ username, userArticles }) => {
     navigate(`/dashboard/article/${article._id}`);
   };
 
+  const handleDeleteClick = (article: IArticle) => {
+    setUserArticles(userArticles.filter((a) => a._id !== article._id));
+    setSelectedArticle(null);
+    deleteArticle(article);
+    navigate(`/dashboard`);
+  };
+
   return (
     <Box w="250px" minH="100vh" borderRight="1px" borderColor="gray.200" px="4">
       <Flex alignItems="center" justifyContent={"space-between"} mb="2" mt="3">
@@ -45,7 +53,7 @@ const SideBar: React.FC<SideBarProps> = ({ username, userArticles }) => {
       </Flex>
       <Stack>
         {userArticles.length > 0  ? (
-          <UserArticleList articles={userArticles} handleArticleClick={handleArticleClick}/>
+          <UserArticleList articles={userArticles} handleArticleClick={handleArticleClick} handleDeleteClick={handleDeleteClick}/>
         ) : (
           <Text color="gray.400">No notes yet.</Text>
         )}
@@ -59,9 +67,10 @@ export default SideBar;
 type UserArticleListProps = {
   articles: IArticle[];
   handleArticleClick: (article: IArticle) => void;
+  handleDeleteClick: (article: IArticle) => void;
 }
 
-const UserArticleList : React.FC<UserArticleListProps> = ({ articles , handleArticleClick }) => {
+const UserArticleList : React.FC<UserArticleListProps> = ({ articles , handleArticleClick, handleDeleteClick }) => {
   return (
     <Box>
       <Flex alignItems="left" justifyContent="space-between" mt="4">
@@ -99,7 +108,7 @@ const UserArticleList : React.FC<UserArticleListProps> = ({ articles , handleArt
               colorScheme="gray"
               aria-label="Close"
               size="xs"
-              onClick={() => console.log("Clicked!")}
+              onClick={() => handleDeleteClick(article)}
             />
           </Flex>
         ))}
