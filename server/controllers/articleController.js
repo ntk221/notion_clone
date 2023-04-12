@@ -52,3 +52,19 @@ exports.deleteArticle = async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 }
+
+exports.updateArticle = async (req, res) => {
+    try {
+        const article = await Article.findById(req.params.id);
+        if (!article) {
+            return res.status(404).json({ message: "Article not found" });
+        }
+        const { title, body } = req.body;
+        article.title = title;
+        article.body = body;
+        await article.save();
+        res.status(200).json(article);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
