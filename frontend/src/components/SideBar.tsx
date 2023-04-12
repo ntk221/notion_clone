@@ -3,11 +3,12 @@ import { Box, Flex, Text, VStack, Stack, Button } from "@chakra-ui/react";
 import { IArticle } from "../types/articleType";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { ArticleContext } from "../contexts/contexts";
 import { DeleteIcon, SmallAddIcon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/react";
 import { FiLogOut } from "react-icons/fi";
 import { deleteArticle } from "../api/articlesApi";
+import { createArticle } from "../api/articlesApi";
+import { UserContext, ArticleContext } from "../contexts/contexts";
 
 type SideBarProps = {
   username: string;
@@ -79,6 +80,19 @@ const UserArticleList: React.FC<UserArticleListProps> = ({
   handleArticleClick,
   handleDeleteClick,
 }) => {
+  const user = useContext(UserContext);
+  const { setUserArticles } = useContext(ArticleContext);
+
+  const handleCreateArticle = async () => {
+    try {
+      const response = await createArticle("", "", user.id);
+
+      await setUserArticles((prev) => [response, ...prev]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Box
       maxW="200px"
@@ -103,7 +117,7 @@ const UserArticleList: React.FC<UserArticleListProps> = ({
           colorScheme="gray"
           aria-label="Plus"
           size="xs"
-          onClick={() => console.log("Clicked!")}
+          onClick={() => handleCreateArticle()}
         />
       </Flex>
       <VStack spacing={0.8} align="stretch">

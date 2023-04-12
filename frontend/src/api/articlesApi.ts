@@ -18,27 +18,6 @@ export const fetchArticles = async (userId : string) => {
     }
   };
 
-export const postArticle = async(editTitle : string, editBody : string, selectedArticle : IArticle) => {
-  try {
-        const response = await axios.post(`/articles`, {
-        _id : selectedArticle._id,
-        title: editTitle,
-        body: editBody,
-        author: selectedArticle.author,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
 export const updateArticle = async(editTitle : string, editBody : string, selectedArticle : IArticle) => {
   try {
         const response = await axios.put(`/articles/${selectedArticle._id}`, {
@@ -59,6 +38,20 @@ export const updateArticle = async(editTitle : string, editBody : string, select
     }
   };
 
+export  const createArticle = async (title : string, body : string, author : string) => {
+    const response = await axios.post(`/articles`, {
+      title,
+      body,
+      author,
+    }, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    return response.data as IArticle;
+  };
 
 export const deleteArticle = async(selectedArticle : IArticle) => {
   try {
