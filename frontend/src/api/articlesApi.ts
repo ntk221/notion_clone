@@ -1,7 +1,7 @@
 import axios from "axios";
 import { IArticle } from "../types/articleType";
 
-const fetchArticles = async (userId : string) => {
+export const fetchArticles = async (userId : string) => {
     try {
       const response = await axios.get("/articles", {
         params : {
@@ -39,4 +39,19 @@ export const postArticle = async(editTitle : string, editBody : string, selected
     }
   };
 
-export default fetchArticles;
+export const deleteArticle = async(selectedArticle : IArticle) => {
+  try {
+        const response = await axios.delete(`/articles/${selectedArticle._id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
+
+      console.log(response);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };

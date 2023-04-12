@@ -41,12 +41,14 @@ exports.postArticle = async (req, res) => {
 exports.deleteArticle = async (req, res) => {
     try {
         const article = await Article.findById(req.params.id);
+        console.log(article);
         if (!article) {
             return res.status(404).json({ message: "Article not found" });
         }
-        await article.remove();
+        await article.deleteOne();
         res.status(200).json({ message: "Article deleted" });
     } catch (err) {
+        console.error(err);
         res.status(500).json({ message: err.message });
     }
 }
