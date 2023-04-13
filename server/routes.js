@@ -14,6 +14,8 @@ router.get("/", (req, res) => {
 
 router.post("/signup", authController.signup);
 
+router.post("/login", authController.login);
+
 router.get("/check-auth", verifyToken, authController.checkAuth);
 
 router.get("/user", verifyToken, userController.getUser);

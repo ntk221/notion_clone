@@ -36,6 +36,11 @@ const SideBar: React.FC<SideBarProps> = ({ username, userArticles }) => {
     navigate(`/dashboard`);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate(`/`);
+  };
+
   return (
     <Box minH="100vh" borderRight="1px" borderColor="gray.200" px="4" style={{ flexShrink: 0, width: "200px" }}>
       <Flex alignItems="left" justifyContent={"space-between"} mb="2" mt="3">
@@ -49,7 +54,7 @@ const SideBar: React.FC<SideBarProps> = ({ username, userArticles }) => {
           aria-label="Plus"
           w={5}
           size="s"
-          onClick={() => console.log("Clicked!")}
+          onClick={() => handleLogout()}
         />
       </Flex>
       <Stack>
