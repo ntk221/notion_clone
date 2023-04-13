@@ -19,6 +19,7 @@ const AppLayout = () => {
   });
   const [userArticles, setUserArticles] = useState<IArticle[]>([]);
   const [selectedArticle, setSelectedArticle] = useState<IArticle | null>(null);
+  const navigate = useNavigate();
 
   // ログインしているユーザーの情報を取得して，stateにセットする
   useEffect(() => {
@@ -26,6 +27,7 @@ const AppLayout = () => {
     if (token) {
       const fetchUserData = async () => {
         const userData = await getUserData();
+        console.log(userData);
         setUserData(userData);
       };
       fetchUserData();
@@ -48,8 +50,6 @@ const AppLayout = () => {
       getArticles();
     }
   }, [userData]);
-
-  const navigate = useNavigate();
 
   return (
     <ChakraProvider>
