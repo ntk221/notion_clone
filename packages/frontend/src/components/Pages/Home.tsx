@@ -13,12 +13,10 @@ const Home: React.FC = () => {
   const handleCreateArticle = async () => {
     try {
       const response = await createArticle("","", user.id);
-
-      await setSelectedArticle(response);
+      setSelectedArticle(response);
 
       const addedArticle = response;
-
-      await setUserArticles((prev) => [...prev, addedArticle]);
+      setUserArticles((prev) => [...prev, addedArticle]);
 
       navigate(`/dashboard/article/${response._id}`);
     } catch (error) {
