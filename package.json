@@ -1,21 +1,6 @@
 {
-  "name": "notion_clone",
-  "version": "1.0.0",
-  "description": "notionのクローンアプリ",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@types/jsonwebtoken": "^9.0.1",
-    "dotenv": "^16.0.3",
-    "mongoose": "^7.0.2",
-    "react-icons": "^4.8.0"
-  },
-  "devDependencies": {
-    "date-fns": "^2.29.3"
-  }
+  "private": true,
+  "workspaces":[
+    "packages/*"
+  ]
 }
