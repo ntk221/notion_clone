@@ -27,7 +27,7 @@ const AppLayout = () => {
     if (token) {
       const fetchUserData = async () => {
         const userData = await getUserData();
-        console.log(userData);
+        // console.log(userData);
         setUserData(userData);
       };
       fetchUserData();

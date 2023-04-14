@@ -41,7 +41,6 @@ exports.postArticle = async (req, res) => {
 exports.deleteArticle = async (req, res) => {
     try {
         const article = await Article.findById(req.params.id);
-        console.log(article);
         if (!article) {
             return res.status(404).json({ message: "Article not found" });
         }
