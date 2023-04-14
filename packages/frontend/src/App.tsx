@@ -7,6 +7,7 @@ import SignupForm from "./components/Pages/SignupForm";
 import LoginForm from "./components/Pages/LoginForm";
 import Home from "./components/Pages/Home";
 import Article from "./components/Pages/Article";
+import AuthHome from "./components/Pages/AuthHome";
 
 const NotFound = () => {
   return <h1>404 Not Found</h1>;
@@ -18,6 +19,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<AuthLayout />}>
+          <Route path="" element={<AuthHome />} />
           <Route path="signup" element={<SignupForm />} />
           <Route path="login" element={<LoginForm />} />
         </Route>
