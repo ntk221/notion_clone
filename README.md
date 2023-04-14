@@ -60,7 +60,7 @@ npm run start:frontend
 
 `http://localhost:3000`にアクセスするとアプリケーションが使用できます。
 
-##　参考サイト,書籍など
+## 参考サイト,書籍など
 - https://www.npmjs.com/ (npm公式サイト)
 - https://chakra-ui.com/ (chakra-ui公式サイト)
 - https://www.udemy.com/course/notion-fullstack-webdev/ (Udemyの講座)
