@@ -10,7 +10,6 @@ const AuthLayout = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        console.log("checkAuth");
         const response = await axios.get("/check-auth", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

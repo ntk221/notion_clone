@@ -13,20 +13,6 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const SignupForm: React.FC = () => {
-  /*const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    email: "",
-  });
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-  };*/
-
   const navigate = useNavigate();
 
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -44,7 +30,7 @@ const SignupForm: React.FC = () => {
       });
       const token = response.data.token;
       localStorage.setItem("token", token);
-      console.log(response);
+      // console.log(response);
       navigate("/dashboard");
     } catch (error) {
       if (axios.isAxiosError(error)) {
