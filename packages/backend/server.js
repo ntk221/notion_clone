@@ -9,10 +9,14 @@ const app = express();
 app.use(helmet());
 app.use(json());
 
-connectDB().then(() => {
+connectDB()
+  .then(() => {
     app.listen(8001, () => {
       console.log("start listening");
     });
+  })
+  .catch((err) => {
+    console.error("Failed to connect to database:", err);
   });
 
 app.use("/", routes);
