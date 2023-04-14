@@ -2,13 +2,13 @@
 
 notionの複製アプリです。
 
-### 概要
+## 概要
 以下の機能をサポートしています。
 - 記事の作成，読み込み，更新，削除機能
 - ユーザーの新規登録機能
 - ログイン機能
 
-### アプリケーションの構成
+## アプリケーションの構成
 
 フロントエンド: React.js + TypeScript
 - UIライブラリとして Chakra UI を使用しています。
@@ -22,7 +22,7 @@ notionの複製アプリです。
 
 パッケージ管理にはnpmを使用しており、monorepo構成にするためにnpm workspaceを使用しています。
 
-### 使い方
+## 使い方
 アプリケーションのインストールを以下の手順に従って行います。
 
 1. ターミナル上で，このリポジトリをクローンします。
@@ -60,7 +60,7 @@ npm run start:frontend
 
 `http://localhost:3000`にアクセスするとアプリケーションが使用できます。
 
-### 参考サイト,書籍など
+##　参考サイト,書籍など
 - https://www.npmjs.com/ (npm公式サイト)
 - https://chakra-ui.com/ (chakra-ui公式サイト)
 - https://www.udemy.com/course/notion-fullstack-webdev/ (Udemyの講座)
