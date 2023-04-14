@@ -23,7 +23,7 @@ notionの複製アプリです。
 パッケージ管理にはnpmを使用しており、monorepo構成にするためにnpm workspaceを使用しています。
 
 ### 使い方
-インストールを以下の手順に従って行います。
+アプリケーションのインストールを以下の手順に従って行います。
 
 1. ターミナル上で，このリポジトリをクローンします。
 ```
@@ -35,6 +35,13 @@ git@github.com:ntk221/notion_clone.git
 cd notion_clone
 npm install
 ```
+
+次に，アプリケーションに必要な設定を行います。アプリケーションを起動するために，backendディレクトリに.envファイルを用意する必要があります。
+```
+cd packages/backend
+touch .env
+```
+.envファイルには，MongoDBのURIを表す`MONGO_URI`と,JWTトークンのための秘密鍵を表す`JWT_SECRET`の値を設定してください。
 
 次に，アプリケーションの起動は以下の手順に従います。
 
