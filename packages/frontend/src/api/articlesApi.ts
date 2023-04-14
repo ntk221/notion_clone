@@ -11,7 +11,7 @@ export const fetchArticles = async (userId : string) => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      console.log(response);
+      // console.log(response);
       return response.data;
     } catch (error) {
       console.log(error);
@@ -63,7 +63,7 @@ export const deleteArticle = async(selectedArticle : IArticle) => {
         },
       });
 
-      console.log(response);
+      // console.log(response);
       return response;
     } catch (error) {
       console.log(error);
