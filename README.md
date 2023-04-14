@@ -1,6 +1,4 @@
-# notion_clone
-
-notionの複製アプリです。
+# Notion_clone
 
 ## 概要
 以下の機能をサポートしています。
