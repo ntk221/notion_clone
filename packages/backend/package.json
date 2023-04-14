@@ -7,17 +7,19 @@
     "testEnvironment": "node"
   },
   "scripts": {
-    "test": "jest"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-basic-auth": "^1.2.1",
     "helmet": "^6.0.1",
-    "jsonwebtoken": "^9.0.0"
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^7.0.3"
   },
   "devDependencies": {
     "jest": "^29.5.0",
