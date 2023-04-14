@@ -13,7 +13,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 const SignupForm: React.FC = () => {
-  const [formData, setFormData] = useState({
+  /*const [formData, setFormData] = useState({
     username: "",
     password: "",
     email: "",
@@ -25,7 +25,7 @@ const SignupForm: React.FC = () => {
       ...prevFormData,
       [name]: value,
     }));
-  };
+  };*/
 
   const navigate = useNavigate();
 
@@ -70,8 +70,6 @@ const SignupForm: React.FC = () => {
             <Input
               type="text"
               name="username"
-              value={formData.username}
-              onChange={handleInputChange}
             />
           </FormControl>
           <FormControl id="email">
@@ -79,8 +77,6 @@ const SignupForm: React.FC = () => {
             <Input
               type="email"
               name="email"
-              value={formData.email}
-              onChange={handleInputChange}
             />
           </FormControl>
           <FormControl id="password">
@@ -88,8 +84,6 @@ const SignupForm: React.FC = () => {
             <Input
               type="password"
               name="password"
-              value={formData.password}
-              onChange={handleInputChange}
             />
           </FormControl>
           <Button type="submit" colorScheme="blue" w="full">

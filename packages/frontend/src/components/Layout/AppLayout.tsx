@@ -49,7 +49,7 @@ const AppLayout = () => {
     if (userData.id) {
       getArticles();
     }
-  }, [userData]);
+  }, [userData.id]);
 
   return (
     <ChakraProvider>

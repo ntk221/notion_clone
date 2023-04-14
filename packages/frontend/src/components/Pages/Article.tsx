@@ -9,9 +9,12 @@ import { updateArticle } from "../../api/articlesApi";
 const Article = () => {
   const { selectedArticle, userArticles, setSelectedArticle, setUserArticles } =
     useContext(ArticleContext);
+
+  // State変数の初期値をselectedArticleから取得
   const [editTitle, setEditTitle] = useState(selectedArticle?.title || "");
   const [editBody, setEditBody] = useState(selectedArticle?.body || "");
 
+  // selectedArticleが変更されたら，State変数を更新
   useEffect(() => {
     if (selectedArticle) {
       setEditTitle(selectedArticle.title);
@@ -19,37 +22,27 @@ const Article = () => {
     }
   }, [selectedArticle]);
 
+  // selectedArticleがnullの場合は，No article selectedを表示
   if (!selectedArticle) {
     return <div>No article selected</div>;
   }
 
-  const handleUpdate = async (event: React.FormEvent<HTMLDivElement>) => {
-    event.preventDefault();
-
-    const response = await updateArticle(editTitle, editBody, selectedArticle);
-
-    if (!response) {
-      return;
-    }
-
-    const updatedArticles = userArticles.map((article) => {
-      if (article._id === selectedArticle._id) {
-        return {
-          ...article,
-          title: editTitle,
-          body: editBody,
-        };
-      }
-      return article;
-    }) as IArticle[];
-
-    setUserArticles(updatedArticles);
-    setSelectedArticle(response.data);
-  };
-
   return (
     <Box fontSize="xl" mt="20" pl="20" w="70%" mx="auto">
-      <FormControl as="form" onSubmit={handleUpdate}>
+      <FormControl
+        as="form"
+        onSubmit={(event) =>
+          handleUpdate(
+            event,
+            editTitle,
+            editBody,
+            selectedArticle,
+            userArticles,
+            setSelectedArticle,
+            setUserArticles
+          )
+        }
+      >
         <Box width="100%">
           <Input
             type="text"
@@ -87,6 +80,45 @@ const Article = () => {
       </FormControl>
     </Box>
   );
+};
+
+// Updateボタンを押したときの処理
+// 1. 記事の更新処理を行う
+// 2. 更新した記事をuserArticlesにセットする
+const handleUpdate = async (
+  event: React.FormEvent<HTMLDivElement>,
+  editTitle: string,
+  editBody: string,
+  selectedArticle: IArticle | null,
+  userArticles: IArticle[],
+  setSelectedArticle: React.Dispatch<React.SetStateAction<IArticle | null>>,
+  setUserArticles: React.Dispatch<React.SetStateAction<IArticle[]>>
+) => {
+  event.preventDefault();
+
+  if (!selectedArticle) {
+    return;
+  }
+
+  const response = await updateArticle(editTitle, editBody, selectedArticle);
+
+  if (!response) {
+    return;
+  }
+
+  const updatedArticles = userArticles.map((article) => {
+    if (article._id === selectedArticle._id) {
+      return {
+        ...article,
+        title: editTitle,
+        body: editBody,
+      };
+    }
+    return article;
+  }) as IArticle[];
+
+  setUserArticles(updatedArticles);
+  setSelectedArticle(response.data);
 };
 
 export default Article;
