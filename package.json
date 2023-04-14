@@ -2,5 +2,10 @@
   "private": true,
   "workspaces":[
     "packages/*"
-  ]
+  ],
+  "scripts": {
+    "start:backend" : "npm start -w packages/backend",
+    "start:frontend" : "npm start -w packages/frontend",
+    "test:backend": "npm test -w packages/backend"
+  }
 }
