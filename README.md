@@ -25,7 +25,7 @@
 
 1. ターミナル上で，このリポジトリをクローンします。
 ```
-git@github.com:ntk221/notion_clone.git
+git clone git@github.com:ntk221/notion_clone.git
 ```
 
 2. クローンしたリポジトリに移動して，プロジェクトのルートディレクトリで`npm install`コマンドを実行し，アプリケーションの依存関係をインストールします。
